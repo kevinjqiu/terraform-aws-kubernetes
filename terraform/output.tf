@@ -1,9 +1,11 @@
 output "ips" {
-    value = ["${aws_instance.etcd.public_ip}"]
+    value = "${jsonencode(concat(aws_instance.etcd.*.public_ip, aws_instance.etcd.*.private_ip,
+                                 aws_instance.kube_controller.*.public_ip, aws_instance.kube_controller.*.private_ip,
+                                 aws_instance.kube_worker.*.public_ip, aws_instance.kube_worker.*.private_ip))}"
 }
 
 output "public_etcd_ips" {
-    value = ["${aws_instance.etcd.0.public_ip}"]
+    value = ["${aws_instance.etcd.*.public_ip}"]
 }
 
 output "private_etcd_ips" {
@@ -19,9 +21,9 @@ output "private_kube_controller_ips" {
 }
 
 output "public_kube_worker_ips" {
-    value = ["${aws_instance.kube_worker.*.public_ip_address}"]
+    value = ["${aws_instance.kube_worker.*.public_ip}"]
 }
 
 output "private_kube_worker_ips" {
-    value = ["${aws_instance.kube_worker.*.private_ip_address}"]
+    value = ["${aws_instance.kube_worker.*.private_ip}"]
 }

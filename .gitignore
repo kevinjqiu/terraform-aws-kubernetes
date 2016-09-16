@@ -1,6 +1,7 @@
-cfssl
-cfssljson
-terraform.tfvars
-terraform/keys/id_rsa
+certs/bin/cfssl
+certs/bin/cfssljson
+terraform/terraform.tfvars
+terraform/terraform/keys/id_rsa
 certs/*.pem
-certs/ca.csr
+certs/*.csr
+certs/kubernetes-csr.json

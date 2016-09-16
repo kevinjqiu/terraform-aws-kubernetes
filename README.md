@@ -19,3 +19,9 @@
 ```
 
 Terraform recipe for building a Kubernetes cluster on AWS according to Kelsey Hightower's Kubernetes the Hard Way setup.
+
+Requirements
+============
+
+* `terraform`
+* `make`

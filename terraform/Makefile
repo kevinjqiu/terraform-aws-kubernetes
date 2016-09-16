@@ -9,3 +9,6 @@ apply:
 
 v:
 	terraform validate
+
+ips:
+	@terraform output ips
