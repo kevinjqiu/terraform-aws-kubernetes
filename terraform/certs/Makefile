@@ -11,7 +11,7 @@ ca.pem: bin/cfssl bin/cfssljson
 	openssl x509 -in ca.pem -text -noout
 
 kubernetes-csr.json:
-	cat kubernetes-csr.json.tmpl | sed 's/HOSTS/$(shell cd ../terraform && make ips)/' > kubernetes-csr.json
+	cat kubernetes-csr.json.tmpl | sed 's/HOSTS/$(IPS)/' > kubernetes-csr.json
 
 kubernetes.pem: bin/cfssl bin/cfssljson ca.pem kubernetes-csr.json
 	bin/cfssl gencert \
