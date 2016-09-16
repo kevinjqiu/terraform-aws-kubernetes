@@ -1,2 +1,6 @@
+cfssl
+cfssljson
 terraform.tfvars
 terraform/keys/id_rsa
+certs/*.pem
+certs/ca.csr
