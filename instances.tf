@@ -1,7 +1,7 @@
 resource "aws_instance" "etcd" {
     ami                         = "${var.amis["etcd"]}"
     key_name                    = "kubernetes"
-    security_groups             = ["${aws_security_group.kube.id}"]
+    vpc_security_group_ids      = ["${aws_security_group.kube.id}"]
     instance_type               = "t2.small"
     subnet_id                   = "${aws_subnet.kube.id}"
     associate_public_ip_address = "true"
@@ -17,7 +17,7 @@ resource "aws_instance" "kube_controller" {
     ami                         = "${var.amis["kube_controller"]}"
     key_name                    = "kubernetes"
     instance_type               = "t2.small"
-    security_groups             = ["${aws_security_group.kube.id}"]
+    vpc_security_group_ids      = ["${aws_security_group.kube.id}"]
     subnet_id                   = "${aws_subnet.kube.id}"
     associate_public_ip_address = "true"
     count                       = 3
@@ -32,7 +32,7 @@ resource "aws_instance" "kube_worker" {
     ami                         = "${var.amis["kube_worker"]}"
     key_name                    = "kubernetes"
     instance_type               = "t2.small"
-    security_groups             = ["${aws_security_group.kube.id}"]
+    vpc_security_group_ids      = ["${aws_security_group.kube.id}"]
     subnet_id                   = "${aws_subnet.kube.id}"
     associate_public_ip_address = "true"
     count                       = 3
