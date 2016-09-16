@@ -1,2 +1,2 @@
 terraform.tfvars
-keys/id_rsa
+terraform/keys/id_rsa
