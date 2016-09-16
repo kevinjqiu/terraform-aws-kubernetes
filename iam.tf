@@ -29,6 +29,6 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "kube" {
-    name  = "kubernetes"
+    name  = "kubernetes-instance-profile"
     roles = ["${aws_iam_role.kube.id}"]
 }
