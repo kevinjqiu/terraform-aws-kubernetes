@@ -15,6 +15,7 @@ resource "aws_instance" "etcd" {
 
 resource "aws_instance" "kube_controller" {
     ami                         = "${var.amis["kube_controller"]}"
+    key_name                    = "kubernetes"
     instance_type               = "t2.small"
     security_groups             = ["${aws_security_group.kube.id}"]
     subnet_id                   = "${aws_subnet.kube.id}"
@@ -29,6 +30,7 @@ resource "aws_instance" "kube_controller" {
 
 resource "aws_instance" "kube_worker" {
     ami                         = "${var.amis["kube_worker"]}"
+    key_name                    = "kubernetes"
     instance_type               = "t2.small"
     security_groups             = ["${aws_security_group.kube.id}"]
     subnet_id                   = "${aws_subnet.kube.id}"
