@@ -1,4 +1,3 @@
-# TODO: Move provisioning of the hosts to ansible
 resource null_resource "ca-certs" {
     provisioner "local-exec" {
         command = "cd certs && make clean-ca"
@@ -25,7 +24,4 @@ resource null_resource "kubernetes-certs" {
     provisioner "local-exec" {
         command = "cd certs && make kubernetes.pem"
     }
-}
-
-resource null_resource "install-certs" {
 }

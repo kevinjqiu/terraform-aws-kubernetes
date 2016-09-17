@@ -11,6 +11,15 @@ resource "aws_instance" "etcd" {
     tags {
         Name = "kubernetes-etcd-${count.index}"
     }
+    provisioner "file" {
+        source      = "certs/"
+        destination = "/home/ubuntu"
+        connection {
+            type        = "ssh"
+            user        = "ubuntu"
+            private_key = "${file("keys/id_rsa")}"
+        }
+    }
 }
 
 resource "aws_instance" "kube_controller" {
@@ -26,6 +35,15 @@ resource "aws_instance" "kube_controller" {
     tags {
         Name = "kubernetes-controller-${count.index}"
     }
+    provisioner "file" {
+        source      = "certs/"
+        destination = "/home/ubuntu"
+        connection {
+            type        = "ssh"
+            user        = "ubuntu"
+            private_key = "${file("keys/id_rsa")}"
+        }
+    }
 }
 
 resource "aws_instance" "kube_worker" {
@@ -40,5 +58,14 @@ resource "aws_instance" "kube_worker" {
     iam_instance_profile        = "${aws_iam_instance_profile.kube.id}"
     tags {
         Name = "kubernetes-worker-${count.index}"
+    }
+    provisioner "file" {
+        source      = "certs/"
+        destination = "/home/ubuntu"
+        connection {
+            type        = "ssh"
+            user        = "ubuntu"
+            private_key = "${file("keys/id_rsa")}"
+        }
     }
 }
