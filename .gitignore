@@ -1,6 +1,6 @@
-certs/bin/cfssl
-certs/bin/cfssljson
-certs/kubernetes-csr.json
+ansible/certs/bin/cfssl
+ansible/certs/bin/cfssljson
+ansible/certs/kubernetes-csr.json
 terraform/terraform.tfvars
 keys/id_rsa
 *.pem
