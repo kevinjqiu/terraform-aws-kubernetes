@@ -25,3 +25,4 @@ Requirements
 
 * `terraform`
 * `make`
+* `ansible` (>2.2)
