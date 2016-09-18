@@ -7,9 +7,16 @@ import json
 TFSTATE_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'terraform', 'terraform.tfstate'))
 
 
+def _get_public_ips(module, node_type):
+    return module['outputs']['public_{}_ips'.format(node_type)]['value']
+
+
+def _get_private_ips(module, node_type):
+    return module['outputs']['private_{}_ips'.format(node_type)]['value']
+
+
 def get_etcd_hosts(module):
-    public_ips = module['outputs']['public_etcd_ips']['value']
-    private_ips = module['outputs']['private_etcd_ips']['value']
+    public_ips, private_ips = _get_public_ips(module, 'etcd'), _get_private_ips(module, 'etcd')
 
     hosts = list(public_ips)
     hostvars = {}
@@ -30,6 +37,23 @@ def get_etcd_hosts(module):
         }}, hostvars
 
 
+def get_controller_hosts(module):
+    public_ips, private_ips = _get_public_ips(module, 'kube_controller'), _get_private_ips(module, 'kube_controller')
+
+    hosts = list(public_ips)
+    hostvars = {}
+
+    for i, (public_ip, private_ip) in enumerate(zip(public_ips, private_ips)):
+        hostvars[public_ip] = {
+            'private_ip': private_ip,
+            'controller_name': 'controller{}'.format(i),
+        }
+
+    return {
+        'hosts': hosts
+    }, hostvars
+
+
 if __name__ == '__main__':
     if not os.path.exists(TFSTATE_FILE):
         sys.stderr.write('No terraform state file; pleasse run `terraform apply` first\n')
@@ -42,14 +66,17 @@ if __name__ == '__main__':
     module = tfstate['modules'][0]
 
     etcd, etcd_hostvars = get_etcd_hosts(module)
+    controller, controller_hostvars = get_controller_hosts(module)
 
     inventory = {
         'etcd': etcd,
+        'controller': controller,
         '_meta': {
             'hostvars': {}
         }
     }
 
     inventory['_meta']['hostvars'].update(etcd_hostvars)
+    inventory['_meta']['hostvars'].update(controller_hostvars)
 
     print(json.dumps(inventory))
