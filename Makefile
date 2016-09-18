@@ -1,8 +1,2 @@
-tapply:
-	cd terraform && terraform apply
-
-tplan:
-	cd terraform && terraform plan
-
-tdestroy:
-	cd terraform && terraform destroy
+ssh-key:
+	ssh-keygen -f keys/id_rsa

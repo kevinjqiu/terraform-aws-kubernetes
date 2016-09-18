@@ -26,3 +26,28 @@ Requirements
 * `terraform`
 * `make`
 * `ansible` (>2.2)
+
+Steps to build a Kubernetes Cluster on AWS
+==========================================
+
+Generate SSH keypair to be used with the cluster
+------------------------------------------------
+
+In the root folder of the project:
+
+    make ssh-key
+
+Use terraform to build the infrastructure
+-----------------------------------------
+
+    cd terraform && make apply
+
+Generate the certificates
+-------------------------
+
+    cd ansible/certs && make all
+
+Provision the machines
+----------------------
+
+    cd ansible && make apply
