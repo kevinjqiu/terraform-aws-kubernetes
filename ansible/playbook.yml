@@ -26,3 +26,4 @@
   roles:
       - certs
       - docker
+      - kubelet
