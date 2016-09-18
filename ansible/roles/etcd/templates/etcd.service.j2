@@ -4,12 +4,12 @@ Documentation=https://github.com/coreos/coreos
 
 [Service]
 ExecStart=/usr/bin/etcd --name {{ etcd_name }} \
-  --cert-file=/etc/etcd/kubernetes.pem \
-  --key-file=/etc/etcd/kubernetes-key.pem \
-  --peer-cert-file=/etc/etcd/kubernetes.pem \
-  --peer-key-file=/etc/etcd/kubernetes-key.pem \
-  --trusted-ca-file=/etc/etcd/ca.pem \
-  --peer-trusted-ca-file=/etc/etcd/ca.pem \
+  --cert-file={{ cert_dir }}/kubernetes.pem \
+  --key-file={{ cert_dir }}/kubernetes-key.pem \
+  --peer-cert-file={{ cert_dir }}/kubernetes.pem \
+  --peer-key-file={{ cert_dir }}/kubernetes-key.pem \
+  --trusted-ca-file={{ cert_dir }}/ca.pem \
+  --peer-trusted-ca-file={{ cert_dir }}/ca.pem \
   --initial-advertise-peer-urls https://{{ private_ip }}:2380 \
   --listen-peer-urls https://{{ private_ip }}:2380 \
   --listen-client-urls https://{{ private_ip }}:2379,http://127.0.0.1:2379 \
