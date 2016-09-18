@@ -6,3 +6,4 @@ terraform/terraform.tfvars
 keys/id_rsa
 *.pem
 *.csr
+playbook.retry

@@ -1,0 +1,4 @@
+certs/bin/cfssl filter=lfs diff=lfs merge=lfs -text
+certs/bin/cfssljson filter=lfs diff=lfs merge=lfs -text
+roles/etcd/files/etcd filter=lfs diff=lfs merge=lfs -text
+roles/etcd/files/etcdctl filter=lfs diff=lfs merge=lfs -text
