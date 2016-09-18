@@ -7,3 +7,4 @@ keys/id_rsa
 *.pem
 *.csr
 playbook.retry
+.ropeproject/
