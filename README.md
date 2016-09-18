@@ -18,7 +18,7 @@
 |_|\_\__,_|_.__/ \___|_|  |_| |_|\___|\__\___||___/
 ```
 
-Terraform recipe for building a Kubernetes cluster on AWS according to Kelsey Hightower's Kubernetes the Hard Way setup.
+Terraform recipe for building a Kubernetes cluster on AWS according to Kelsey Hightower's [Kubernetes the Hard Way](https://github.com/kelseyhightower/kubernetes-the-hard-way/) setup.
 
 Requirements
 ============
