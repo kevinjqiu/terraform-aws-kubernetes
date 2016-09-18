@@ -4,6 +4,8 @@ ansible/certs/kubernetes-csr.json
 ansible/roles/etcd/files/etcd*
 ansible/roles/controller/files/kube*
 ansible/roles/docker/files/docker*
+ansible/roles/kubelet/files/cni/*
+ansible/roles/kubelet/files/kube*
 terraform/terraform.tfvars
 keys/id_rsa
 *.pem

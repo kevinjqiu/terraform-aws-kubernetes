@@ -1,0 +1,12 @@
+---
+- name: Make sure CNI folder is present
+  file: path=/opt/cni
+        owner=root
+        group=root
+        state=directory
+- name: Install CNI binary
+  copy: src=cni/
+        dest=/opt/cni/bin
+        owner=root
+        group=root
+        mode=0755
