@@ -37,7 +37,7 @@ def get_etcd_hosts(module):
         }}, hostvars
 
 
-def get_controller_hosts(module):
+def get_controller_hosts(etcd_servers, module):
     public_ips, private_ips = _get_public_ips(module, 'kube_controller'), _get_private_ips(module, 'kube_controller')
 
     hosts = list(public_ips)
@@ -50,7 +50,12 @@ def get_controller_hosts(module):
         }
 
     return {
-        'hosts': hosts
+        'hosts': hosts,
+        'vars': {
+            'etcd_servers': ','.join([
+                'https://{}:2379'.format(ip) for ip in etcd_servers
+            ])
+        }
     }, hostvars
 
 
@@ -66,7 +71,7 @@ if __name__ == '__main__':
     module = tfstate['modules'][0]
 
     etcd, etcd_hostvars = get_etcd_hosts(module)
-    controller, controller_hostvars = get_controller_hosts(module)
+    controller, controller_hostvars = get_controller_hosts(etcd['hosts'], module)
 
     inventory = {
         'etcd': etcd,
