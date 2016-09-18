@@ -1,0 +1,32 @@
+---
+- name: Copy etcd binaries
+  copy: src={{ item }}
+        dest=/usr/bin/{{ item }}
+        owner=root
+        group=root
+        mode=0755
+  with_items:
+      - etcd
+      - etcdctl
+- name: Make sure etcd folders are created
+  file: path={{ item }}
+        owner=root
+        group=root
+        state=directory
+  with_items:
+      - /etc/etcd
+      - /var/lib/etcd
+- name: Copy certificate files
+  copy: src=certs/{{ item }}
+        dest=/etc/etcd/{{ item }}
+        owner=root
+        group=root
+        mode=0400
+  with_items:
+      - ca.pem
+      - kubernetes.pem
+      - kubernetes-key.pem
+- name: Configure etcd
+  template: dest=/etc/systemd/system/etcd.service
+            src=etcd.service.j2
+  notify: restart etcd

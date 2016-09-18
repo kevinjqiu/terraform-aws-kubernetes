@@ -1,0 +1,5 @@
+---
+- name: restart etcd
+  systemd: enabled=yes
+           name=etcd.service
+           daemon_reload=yes

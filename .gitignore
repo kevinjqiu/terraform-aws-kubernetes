@@ -1,6 +1,7 @@
 ansible/certs/bin/cfssl
 ansible/certs/bin/cfssljson
 ansible/certs/kubernetes-csr.json
+ansible/roles/etcd/files/etcd*
 terraform/terraform.tfvars
 keys/id_rsa
 *.pem
