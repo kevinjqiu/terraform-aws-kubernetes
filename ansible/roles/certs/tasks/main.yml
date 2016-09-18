@@ -1,0 +1,16 @@
+---
+- name: Make sure the cert folder is created
+  file: path={{ cert_dir }}
+        owner=root
+        group=root
+        state=directory
+- name: Copy certificate files
+  copy: src=certs/{{ item }}
+        dest={{ cert_dir }}/{{ item }}
+        owner=root
+        group=root
+        mode=0400
+  with_items:
+      - ca.pem
+      - kubernetes.pem
+      - kubernetes-key.pem

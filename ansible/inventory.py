@@ -33,7 +33,8 @@ def get_etcd_hosts(module):
     return {
         'hosts': hosts,
         'vars': {
-            'initial_cluster': initial_cluster
+            'initial_cluster': initial_cluster,
+            'cert_dir': '/var/lib/kubernetes',
         }}, hostvars
 
 
@@ -54,7 +55,8 @@ def get_controller_hosts(etcd_servers, module):
         'vars': {
             'etcd_servers': ','.join([
                 'https://{}:2379'.format(ip) for ip in etcd_servers
-            ])
+            ]),
+            'cert_dir': '/etc/etcd',
         }
     }, hostvars
 

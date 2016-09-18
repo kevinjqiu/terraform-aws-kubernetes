@@ -1,3 +1,4 @@
+---
 - name: Make sure the kubernetes folders are created
   file: path={{ item }}
         owner=root
@@ -5,16 +6,6 @@
         state=directory
   with_items:
       - /var/lib/kubernetes
-- name: Copy certificate files
-  copy: src=certs/{{ item }}
-        dest=/var/lib/kubernetes/{{ item }}
-        owner=root
-        group=root
-        mode=0400
-  with_items:
-      - ca.pem
-      - kubernetes.pem
-      - kubernetes-key.pem
 - name: Copy kubernetes executables
   copy: src={{ item }}
         dest=/usr/bin/{{ item }}
