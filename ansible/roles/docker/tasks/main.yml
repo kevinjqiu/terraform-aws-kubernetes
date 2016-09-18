@@ -1,0 +1,17 @@
+---
+- name: Copy docker binaries
+  copy: src={{ item }}
+        dest=/usr/bin/{{ item }}
+        owner=root
+        group=root
+        mode=0755
+  with_items:
+      - docker
+      - docker-containerd
+      - docker-containerd-ctr
+      - docker-containerd-shim
+      - docker-runc
+- name: Configure docker
+  template: dest=/etc/systemd/system/docker.service
+            src=docker.service.j2
+  notify: restart docker daemon

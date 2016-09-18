@@ -34,7 +34,7 @@ def get_etcd_hosts(module):
         'hosts': hosts,
         'vars': {
             'initial_cluster': initial_cluster,
-            'cert_dir': '/var/lib/kubernetes',
+            'cert_dir': '/etc/etcd',
         }}, hostvars
 
 
@@ -56,7 +56,27 @@ def get_controller_hosts(etcd_servers, module):
             'etcd_servers': ','.join([
                 'https://{}:2379'.format(ip) for ip in etcd_servers
             ]),
-            'cert_dir': '/etc/etcd',
+            'cert_dir': '/var/lib/kubernetes',
+        }
+    }, hostvars
+
+
+def get_worker_hosts(module):
+    public_ips, private_ips = _get_public_ips(module, 'kube_worker'), _get_private_ips(module, 'kube_worker')
+
+    hosts = list(public_ips)
+    hostvars = {}
+
+    for i, (public_ip, private_ip) in enumerate(zip(public_ips, private_ips)):
+        hostvars[public_ip] = {
+            'private_ip': private_ip,
+            'worker_name': 'worker{}'.format(i),
+        }
+
+    return {
+        'hosts': hosts,
+        'vars': {
+            'cert_dir': '/var/lib/kubernetes',
         }
     }, hostvars
 
@@ -74,10 +94,12 @@ if __name__ == '__main__':
 
     etcd, etcd_hostvars = get_etcd_hosts(module)
     controller, controller_hostvars = get_controller_hosts(etcd['hosts'], module)
+    worker, worker_hostvars = get_worker_hosts(module)
 
     inventory = {
         'etcd': etcd,
         'controller': controller,
+        'worker': worker,
         '_meta': {
             'hostvars': {}
         }
@@ -85,5 +107,6 @@ if __name__ == '__main__':
 
     inventory['_meta']['hostvars'].update(etcd_hostvars)
     inventory['_meta']['hostvars'].update(controller_hostvars)
+    inventory['_meta']['hostvars'].update(worker_hostvars)
 
     print(json.dumps(inventory))
