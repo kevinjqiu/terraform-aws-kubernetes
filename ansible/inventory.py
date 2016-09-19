@@ -79,7 +79,7 @@ def get_worker_hosts(api_servers, module):
             'api_servers': ','.join([
                 'https://{}:6443'.format(ip) for ip in api_servers]),
             'cert_dir': '/var/lib/kubernetes',
-            'kube_proxy_master_ip': hosts[0],
+            'kube_proxy_master_ip': private_ips[0],
         }
     }, hostvars
 
