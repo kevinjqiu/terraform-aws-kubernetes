@@ -61,7 +61,7 @@ def get_controller_hosts(etcd_servers, module):
     }, hostvars
 
 
-def get_worker_hosts(module):
+def get_worker_hosts(api_servers, module):
     public_ips, private_ips = _get_public_ips(module, 'kube_worker'), _get_private_ips(module, 'kube_worker')
 
     hosts = list(public_ips)
@@ -76,7 +76,10 @@ def get_worker_hosts(module):
     return {
         'hosts': hosts,
         'vars': {
+            'api_servers': ','.join([
+                'https://{}:6443'.format(ip) for ip in api_servers]),
             'cert_dir': '/var/lib/kubernetes',
+            'kube_proxy_master_ip': hosts[0],
         }
     }, hostvars
 
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 
     etcd, etcd_hostvars = get_etcd_hosts(module)
     controller, controller_hostvars = get_controller_hosts(etcd['hosts'], module)
-    worker, worker_hostvars = get_worker_hosts(module)
+    worker, worker_hostvars = get_worker_hosts(controller['hosts'], module)
 
     inventory = {
         'etcd': etcd,

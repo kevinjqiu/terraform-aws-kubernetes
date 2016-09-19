@@ -1,0 +1,15 @@
+---
+- name: Copy kubelet binaries
+  copy: src={{ item }}
+        dest=/usr/bin/{{ item }}
+        owner=root
+        group=root
+        mode=0755
+  with_items:
+      - kubectl
+      - kube-proxy
+
+- name: Configure kube-proxy systemd unit
+  template: src=kube-proxy.service.j2
+            dest=/etc/systemd/system/kube-proxy.service
+  notify: restart kube-proxy
