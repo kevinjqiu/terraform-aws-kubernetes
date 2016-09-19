@@ -1,5 +1,5 @@
 ---
-- name: Copy kubelet binaries
+- name: Copy kube-proxy binaries
   copy: src={{ item }}
         dest=/usr/bin/{{ item }}
         owner=root
