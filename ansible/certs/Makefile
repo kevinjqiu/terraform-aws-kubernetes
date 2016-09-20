@@ -24,6 +24,8 @@ kubernetes.pem: bin/cfssl bin/cfssljson ca.pem kubernetes-csr.json
 
 all: ca.pem kubernetes.pem
 
+clean: clean-ca clean-kubernetes
+
 clean-ca:
 	rm ca.pem ca-key.pem ca.csr
 
